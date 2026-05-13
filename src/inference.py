@@ -46,7 +46,9 @@ def measure_inference(model: str, prompt: str, temperature: float = 0.0) -> dict
         "total_time_s": round(total_time, 3),
         "ttft_s": round(ttft, 3),
         "approx_tokens": approx_tokens,
-        "tokens_per_second": round(approx_tokens / total_time, 1) if total_time > 0 else 0,
+        "tokens_per_second": round(approx_tokens / total_time, 1)
+        if total_time > 0
+        else 0,
         "memory_before_mb": round(mem_before, 1),
         "memory_after_mb": round(mem_after, 1),
         "temperature": temperature,

@@ -34,9 +34,9 @@ def run_benchmark():
     results = []
 
     for model in MODELS:
-        print(f"\n{'='*60}")
+        print(f"\n{'=' * 60}")
         print(f"Benchmarking: {model}")
-        print(f"{'='*60}")
+        print(f"{'=' * 60}")
 
         model_metrics = {
             "model": model,
@@ -55,13 +55,16 @@ def run_benchmark():
             time.sleep(0.5)
 
         model_metrics["avg_tokens_per_second"] = round(
-            sum(r["tokens_per_second"] for r in inference_results) / len(inference_results), 1
+            sum(r["tokens_per_second"] for r in inference_results)
+            / len(inference_results),
+            1,
         )
         model_metrics["avg_ttft_s"] = round(
             sum(r["ttft_s"] for r in inference_results) / len(inference_results), 3
         )
         model_metrics["avg_total_time_s"] = round(
-            sum(r["total_time_s"] for r in inference_results) / len(inference_results), 3
+            sum(r["total_time_s"] for r in inference_results) / len(inference_results),
+            3,
         )
 
         # Structured output benchmarks
@@ -88,22 +91,26 @@ def run_benchmark():
     # Summary table
     table_data = []
     for r in results:
-        table_data.append([
-            r["model"],
-            r["avg_tokens_per_second"],
-            r["avg_ttft_s"],
-            r["avg_total_time_s"],
-            r["json_validity_rate"],
-        ])
+        table_data.append(
+            [
+                r["model"],
+                r["avg_tokens_per_second"],
+                r["avg_ttft_s"],
+                r["avg_total_time_s"],
+                r["json_validity_rate"],
+            ]
+        )
 
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print("BENCHMARK SUMMARY")
-    print(f"{'='*60}")
-    print(tabulate(
-        table_data,
-        headers=["Model", "Avg TPS", "Avg TTFT(s)", "Avg Total(s)", "JSON Valid %"],
-        tablefmt="grid",
-    ))
+    print(f"{'=' * 60}")
+    print(
+        tabulate(
+            table_data,
+            headers=["Model", "Avg TPS", "Avg TTFT(s)", "Avg Total(s)", "JSON Valid %"],
+            tablefmt="grid",
+        )
+    )
 
     # Save results
     output_path = Path("reports/benchmark_results.json")

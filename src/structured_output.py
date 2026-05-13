@@ -38,7 +38,9 @@ Text: {text}
 Return ONLY valid JSON, no other text."""
 
 
-def extract_with_retry(model: str, text: str, max_retries: int = 1) -> ExtractionResult | None:
+def extract_with_retry(
+    model: str, text: str, max_retries: int = 1
+) -> ExtractionResult | None:
     """Extract structured data with validation and retry on failure."""
     prompt = EXTRACTION_PROMPT.format(text=text)
 
@@ -71,7 +73,10 @@ def extract_with_retry(model: str, text: str, max_retries: int = 1) -> Extractio
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", default="llama3.2:3b")
-    parser.add_argument("--text", default="Apple CEO Tim Cook announced new AI features at WWDC in Cupertino on June 10, 2025.")
+    parser.add_argument(
+        "--text",
+        default="Apple CEO Tim Cook announced new AI features at WWDC in Cupertino on June 10, 2025.",
+    )
     args = parser.parse_args()
 
     result = extract_with_retry(args.model, args.text)
